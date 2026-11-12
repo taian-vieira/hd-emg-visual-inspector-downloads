@@ -1,45 +1,55 @@
-# hd-emg-visual-inspector-downloads
 # HD-EMG Visual Inspector
 
-A Python/Flet desktop application for inspecting high-density surface EMG recordings and recording channel-quality decisions (*interpolation* and *exclusion*) in an Excel workbook.
+A desktop application for inspecting high-density surface EMG recordings, recording channel-quality decisions, reviewing synchronization events, and preparing recordings for DEMUSE decomposition.
 
-Developed by Taian Martins Vieira, LISiN — Politecnico di Torino.
+Developed by **Taian Martins Vieira**, **LISiN — Politecnico di Torino**.
 
-## Status and downloads
+This public repository provides application downloads and user documentation. The development source repository is maintained separately and is private.
 
-**Version 0.1.0.** Standalone Windows and macOS builds have been built and tested by the developer, with successful testing also reported by colleagues. Testing is ongoing; a complete list of tested operating-system versions and processor architectures has not yet been established.
+## Main features
 
-The first GitHub release is being prepared. For now, use the testing package shared directly by the developer. Once published, application downloads and the illustrated user guide will be available on the [Releases page](https://github.com/taian-vieira/hd-emg-visual-inspector/releases). While the repository is private, access requires a GitHub invitation.
+- Support for **MEACs probes (32 channels per probe)** and **BAM probes (64 channels per probe)**: see *https://recbioengineering.com/*.
+- Workbook-based organization of subjects, trials, probe identifiers, and electrode arrangements.
+- Monopolar and differential visualization, band-pass and notch filtering, amplitude scaling, zoom, and pan.
+- Interactive channel interpolation and exclusion decisions, saved to the workbook.
+- Inspection and manual correction of synchronization events for each probe.
+- Batch synchronization-event detection with per-trial feedback.
+- Batch export of recordings and metadata, with a MATLAB CKC reader for use in DEMUSE.
 
-## Run the desktop application
+## Downloads and release status
 
-The packaged application includes its Python runtime and dependencies. Users do not need to install Python, Flet, Flutter, or development tools.
+The updated release is being prepared. Published application packages and the illustrated user guide will be available on the [Releases page](https://github.com/taian-vieira/hd-emg-visual-inspector-downloads/releases).
 
-### Windows
+Choose the download for your operating system and check its release notes for supported versions and processor architectures. Standalone Windows and macOS builds have been tested by the developer and colleagues; a complete compatibility matrix has not yet been established.
 
-1. Obtain the Windows ZIP and extract the **entire archive** to a local folder.
-2. Open the application folder and launch its `.exe` file. Keep all accompanying folders and files alongside it; do not move only the executable.
-3. Click **Open** and select the workbook in your data folder.
+**Python, Flet, Flutter, and development tools are not required to run the packaged application.**
 
-### macOS
+GitHub also displays automatically generated **Source code** archives. In this repository, these contain documentation rather than the application. Download the named Windows or macOS package instead.
 
-1. Obtain the macOS ZIP and extract it in Finder.
-2. Keep the complete `.app` bundle together; it may be copied to **Applications** or another local folder.
-3. Launch the `.app`, click **Open**, and select the workbook in your data folder.
+## Installation and first launch
 
-The current Mac build has not been signed with a Developer ID certificate and notarized for wider distribution. If macOS prevents it from opening, send the exact message to the developer so the cause can be checked.
+Follow the instructions supplied with the selected release. Windows installers and macOS disk images are planned; their availability will be stated in the release notes.
 
-### User guide and example data
+For portable ZIP packages:
 
-Start with **User_Guide.pdf**, the illustrated guide supplied with the testing package. It explains workbook selection, trial inspection, channel decisions, saving, and keyboard shortcuts. The guide will also accompany the first GitHub release.
+- **Windows:** extract the entire ZIP to a local folder and launch the application `.exe`. Keep all accompanying files and folders together; do not move only the executable.
+- **macOS:** extract the ZIP in Finder and copy the complete `.app` bundle to **Applications**, then open it.
 
-The separately shared example dataset contains a workbook with the full trial table, but recordings for **six trials only**. See the guide for the included subjects and trials. Selecting other rows is expected to report missing recordings. Preserve all subject, recording-folder, and file names, and use a copy of the example workbook when testing changes.
+After launching, click **Open** and select the workbook in your data directory.
 
-Application archives published on GitHub will contain no real participant workbooks or raw recordings. Example data are shared separately from GitHub.
+Unsigned packages may trigger operating-system security warnings. If an application cannot be opened, report the exact message and the package version. Do not disable system-wide security protections.
+
+## User guide and example data
+
+Consult the illustrated user guide supplied with the release for the interface and inspection workflow. The sections below describe the workbook, recording layout, shortcuts, and synchronization/export features.
+
+Example data, when provided, are shared separately. The existing example workbook contains a full trial table, but recordings are supplied for **six trials only**. Selecting other rows is expected to report missing recordings. Preserve subject, recording-folder, and file names, and work on a copy of the example workbook.
+
+**Real participant workbooks and raw recordings are not included in this repository or its release packages.**
 
 ## Workbook and recordings
 
-Keep participant data outside the source repository. The workbook must be inside the directory containing the subject folders:
+Keep participant data in a separate data directory, outside the application installation folder and this repository. The workbook must be inside the directory containing the subject folders:
 
 ```text
 data/
@@ -71,7 +81,7 @@ The acquisition system creates the folder and file names automatically. Match fo
 
 Use an `.xlsx` workbook. The application selects the sheet named exactly **EMG**, if present; otherwise, it uses the first worksheet. Put headers in row 1 and one trial per subsequent row.
 
-All nine columns below must exist, in any order. Header matching ignores capitalization, leading/trailing whitespace, and repeated whitespace between words. Duplicate headers after normalization are rejected. Extra metadata columns are permitted and displayed in the details panel.
+All ten columns below must exist, in any order. Header matching ignores capitalization, leading/trailing whitespace, and repeated whitespace between words. Duplicate headers after normalization are rejected. Extra metadata columns are permitted and displayed in the details panel.
 
 | Required header | Content |
 | --- | --- |
@@ -86,16 +96,15 @@ All nine columns below must exist, in any order. Header matching ignores capital
 | EMG Chs to Exclude | Blank or one-based acquisition-channel numbers, separated by spaces or commas. Ranges are not supported here. |
 | EMG Sync Events | Stored trigger events as JSON text, grouped by the probe identifiers used in `Sensors`. |
 
-`Electrodes Order` fills each display column from top to bottom, then advances to the next column. Channel IDs must exist in the loaded recordings. With two 32-channel probes, the first probe supplies channels 1–32 and the second supplies 33–64. Decision columns use those acquisition-channel IDs, not positions in the reordered display. Keep interpolation and exclusion lists disjoint.
+`Electrodes Order` fills each display column from top to bottom, then advances to the next column. Channel IDs must exist in the loaded recordings. With two MEACs probes, the first probe supplies channels 1–32 and the second supplies 33–64. With two BAM probes, the first supplies channels 1–64 and the second supplies 65–128. Decision columns use those acquisition-channel IDs, not positions in the reordered display. Keep interpolation and exclusion lists disjoint.
 
-### Supported recording assumptions
+### Supported probes and recording formats
 
-The current reader expects headerless binary `.sig` files containing **little-endian unsigned 16-bit values**, arranged as successive samples of **32 channels per probe**. It assumes a sampling frequency of **2048 Hz** and applies the fixed conversion factor `2000 / 183 / (2**16 - 1)` mV per count after removing each channel's mean.
+The application supports **MEACs probes with 32 channels each** and **BAM probes with 64 channels each**. Use the original acquisition files and the matching sensor identifiers and electrode arrangement in the workbook.
 
-> [!NOTE] Only MEACs probes for now
-> *The current version works only with MEACs (32-ch-based) probes. A future release will include also GAM (64-ch-based) probes. See https://recbioengineering.com/*
+Support for these probes does not imply support for arbitrary 32- or 64-channel binary files. Other acquisition systems or file formats require specific reader support and validation.
 
-These acquisition settings are defined in `app_state.py`; additional workbook metadata does not override them. Other acquisition formats require explicit code adaptation and validation. Multiple probe files should be synchronized; if their lengths differ, only the length of the shortest file is read from each.
+For recordings from several probes, inspect their synchronization events before exporting aligned data. Equal recording lengths alone do not establish synchronization.
 
 ## Inspection workflow
 
@@ -109,7 +118,7 @@ Interpolation previews the mean of available surrounding grid electrodes, omitti
 
 **Save overwrites the opened workbook** and writes sorted, space-separated channel IDs into the two decision columns for edited trials. Keep a backup and close the workbook in Excel before saving. Save before opening another workbook or closing the application; decisions are not automatically saved. Trial switching within the same workbook retains pending decisions in memory.
 
-Raw `.sig` files are never modified. Filtering and interpolation affect the display; the application does not export processed recordings.
+Original `.sig` files are never modified. Filtering and interpolation affect the display. The separate batch-export workflow described below writes new recording files and metadata; it does not apply the display filters or interpolation to the exported samples.
 
 ### Keyboard shortcuts
 
@@ -141,7 +150,7 @@ Closing the dialog accepts its current event definitions and updates the active 
 
 ### Workbook synchronization information
 
-The workbook requires an additional column named `EMG Sync Events`. Events are stored as JSON text, grouped by the probe identifiers used in `Sensors`. For example:
+The required `EMG Sync Events` column listed above stores synchronization information. Events are stored as JSON text, grouped by the probe identifiers used in `Sensors`. For example:
 
 ```json
 {"M01D34": [2048, 122880], "M01D35": [2176, 123008]}
@@ -186,3 +195,18 @@ Recommended workflow:
 3. Close each inspection dialog to accept its events, then save the workbook.
 4. Run the decomposition export and review its report.
 5. Use the supplied CKC reader for the exported recordings in DEMUSE.
+
+## Feedback and support
+
+Report problems through this repository's [Issues page](https://github.com/taian-vieira/hd-emg-visual-inspector-downloads/issues). Include:
+
+- Application version and downloaded package name.
+- Operating system and processor architecture, if known.
+- Steps that reproduce the problem and the exact error message.
+- Probe type and number of probes, when relevant.
+
+Public issues and attachments are visible to everyone. Do not upload participant workbooks, raw recordings, identifying information, or screenshots containing such information. Use synthetic examples where possible.
+
+## Licence
+
+To be added
