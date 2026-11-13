@@ -207,6 +207,26 @@ Report problems through this repository's [Issues page](https://github.com/taian
 
 Public issues and attachments are visible to everyone. Do not upload participant workbooks, raw recordings, identifying information, or screenshots containing such information. Use synthetic examples where possible.
 
+## Release history
+
+See the [Changelog](CHANGELOG.md) for changes in each version.
+
 ## Licence
 
-To be added
+HD-EMG Visual Inspector license
+
+Copyright (C) 2026
+LISiN (Laboratorio di Ingegneria del Sistema Neuromuscolare e della Riabilitazione Motoria) - Politecnico di Torino, Torino, Italy
+ReC Bioengineering Laboratories S.r.l. - Via Boston 22/7, Turin, Italy
+All Rights Reserved.
+
+Unauthorized copying and use of these software, files, documentation and libraries, via any medium is strictly prohibited.
+Proprietary and confidential.
+
+The above copyright notice, this list of conditions and the following disclaimer this must be included in all the materials provided with this distribution of the software.
+
+Author: Taian Martins Vieira <taian.martins@polito.it>, November 2026
+LISiN (Laboratorio di Ingegneria del Sistema Neuromuscolare e della Riabilitazione Motoria), Politecnico di Torino, Torino, Italy
+ReC Bioengineering Laboratories S.r.l. - Via Boston 22/7, Turin, Italy
+
+THIS SOFTWARE IS PROVIDED BY LISiN AND REC BIOENGINEERING LABORATORIES S.r.l. ''AS IS'' AND NO EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL LISiN AND REC BIOENGINEERING LABORATORIES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
