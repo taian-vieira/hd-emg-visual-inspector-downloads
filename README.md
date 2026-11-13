@@ -215,6 +215,10 @@ Public issues and attachments are visible to everyone. Do not upload participant
 
 See the [Changelog](CHANGELOG.md) for changes in each version.
 
+**Platform availability:** Version 0.2.0 is currently available for Windows.
+The macOS package for this version is being prepared and will be added
+to this release once tested.
+
 ## Licence
 
 HD-EMG Visual Inspector license
