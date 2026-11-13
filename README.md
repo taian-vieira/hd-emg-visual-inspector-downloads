@@ -6,6 +6,10 @@ Developed by **Taian Martins Vieira**, **LISiN — Politecnico di Torino**.
 
 This public repository provides application downloads and user documentation. The development source repository is maintained separately and is private.
 
+**Platform availability:** Version 0.2.0 is currently available for Windows.
+The macOS package for this version is being prepared and will be added
+to this release once tested.
+
 ## Main features
 
 - Support for **MEACs probes (32 channels per probe)** and **BAM probes (64 channels per probe)**: see *https://recbioengineering.com/*.
