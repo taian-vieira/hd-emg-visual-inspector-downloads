@@ -6,10 +6,6 @@ Developed by **Taian Martins Vieira**, **LISiN — Politecnico di Torino**.
 
 This public repository provides application downloads and user documentation. The development source repository is maintained separately and is private.
 
-**Platform availability:** Version 0.2.0 is currently available for Windows.
-The macOS package for this version is being prepared and will be added
-to this release once tested.
-
 ## Main features
 
 - Support for **MEACs probes (32 channels per probe)** and **BAM probes (64 channels per probe)**: see *https://recbioengineering.com/*.
@@ -32,12 +28,12 @@ GitHub also displays automatically generated **Source code** archives. In this r
 
 ## Installation and first launch
 
-Follow the instructions supplied with the selected release. Windows installers and macOS disk images are planned; their availability will be stated in the release notes.
+Follow the instructions supplied with the selected release.
 
 For portable ZIP packages:
 
 - **Windows:** extract the entire ZIP to a local folder and launch the application `.exe`. Keep all accompanying files and folders together; do not move only the executable.
-- **macOS:** extract the ZIP in Finder and copy the complete `.app` bundle to **Applications**, then open it.
+- **macOS:** Download the macOS Intel `.dmg`, open it, and drag HD-EMG Visual Inspector into Applications. Eject the disk image, then launch the application from Applications.
 
 After launching, click **Open** and select the workbook in your data directory.
 
@@ -214,10 +210,6 @@ Public issues and attachments are visible to everyone. Do not upload participant
 ## Release history
 
 See the [Changelog](CHANGELOG.md) for changes in each version.
-
-**Platform availability:** Version 0.2.0 is currently available for Windows.
-The macOS package for this version is being prepared and will be added
-to this release once tested.
 
 ## Licence
 
